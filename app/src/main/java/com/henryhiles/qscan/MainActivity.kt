@@ -1,8 +1,8 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.henryhiles.qscan
 
 import android.Manifest
-import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
@@ -17,6 +17,7 @@ import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -46,7 +47,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Composable
 fun Screen() {
     var code by remember { mutableStateOf("") }
@@ -103,13 +105,12 @@ fun Screen() {
             if (code != "") {
                 val uriHandler = LocalUriHandler.current
                 val isURL = URLUtil.isValidUrl(code)
-                val activity = lifeCycleOwner as Activity
-                val sharedPref =
-                    activity.getPreferences(Context.MODE_PRIVATE)
-                with(sharedPref.edit()) {
-                    putBoolean("", true)
-                    apply()
-                }
+//                val sharedPref =
+//                    activity.getPreferences(Context.MODE_PRIVATE)
+//                with(sharedPref.edit()) {
+//                    putBoolean("", true)
+//                    apply()
+//                }
 
                 AlertDialog(onDismissRequest = { code = "" }) {
                     Surface(
@@ -121,11 +122,14 @@ fun Screen() {
                                 style = MaterialTheme.typography.headlineSmall,
                                 modifier = Modifier.align(CenterHorizontally)
                             )
-                            Text(
-                                text = if (isURL) "This QR code will take you to $code, are you sure you want to go there?" else "The content of that QR Code is \"$code\"",
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(16.dp)
-                            )
+                            SelectionContainer {
+                                Text(
+                                    text = if (isURL) "This QR code will take you to $code, are you sure you want to go there?" else "The content of that QR Code is \"$code\"",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            }
+
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.End
@@ -144,6 +148,37 @@ fun Screen() {
                                         )
                                     }
                             }
+                        }
+                    }
+                }
+            }
+        } else AlertDialog(onDismissRequest = {}) {
+            Surface(
+                shape = MaterialTheme.shapes.large
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "No camera permission",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.align(CenterHorizontally)
+                    )
+                    SelectionContainer {
+                        Text(
+                            text = "Camera permission is needed for this app to function.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = { }) {
+                            Text(
+                                text = "Grant Permission",
+                                style = MaterialTheme.typography.labelLarge
+                            )
                         }
                     }
                 }
