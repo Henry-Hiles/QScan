@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
 import android.webkit.URLUtil
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -51,6 +50,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Screen() {
     var code by remember { mutableStateOf("") }
@@ -95,7 +95,6 @@ fun Screen() {
     }
 
     LaunchedEffect(key1 = code) {
-        Toast.makeText(context, "Test $doNotAsk $code", Toast.LENGTH_LONG).show()
         if (doNotAsk && URLUtil.isValidUrl(code)) {
             uriHandler.openUri(code)
             code = ""
