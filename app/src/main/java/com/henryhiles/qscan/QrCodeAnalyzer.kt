@@ -37,7 +37,7 @@ class QrCodeAnalyzer(private val onQrCodeScanned: (String) -> Unit) : ImageAnaly
                 }.decode(binaryBmp)
                 onQrCodeScanned(result.text)
             } catch (e: Exception) {
-                // Don't print anything
+                // Don't do anything
             } finally {
                 image.close()
             }

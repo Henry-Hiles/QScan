@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QScan</string>
+    <string name="should_auto_open_key">AUTO_OPEN</string>
 </resources>
