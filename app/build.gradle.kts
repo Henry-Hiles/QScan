@@ -7,6 +7,15 @@ android {
     namespace = "com.henryhiles.qscan"
     compileSdk = 33
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("${rootDir}/keystore.jks")
+            keyPassword = System.getenv("KEY_PASSWORD")
+            keyAlias = "key0"
+            storePassword = System.getenv("STORE_PASSWORD")
+        }
+    }
+
     defaultConfig {
         applicationId = "com.henryhiles.qscan"
         minSdk = 29
@@ -14,7 +23,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -23,6 +31,8 @@ android {
     buildTypes {
         named("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             setProguardFiles(
                 listOf(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -31,7 +41,6 @@ android {
             )
         }
         named("debug") {
-            isMinifyEnabled = false
             applicationIdSuffix = ".debug"
         }
     }
