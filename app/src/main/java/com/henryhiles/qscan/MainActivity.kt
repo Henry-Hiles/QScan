@@ -7,7 +7,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Size
 import android.webkit.URLUtil
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -121,12 +120,7 @@ fun Screen() {
                     preview.setSurfaceProvider(previewView.surfaceProvider)
                     val imageAnalysis = ImageAnalysis.Builder()
                         .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
-                        .setTargetResolution(
-                            Size(
-                                640, // previewView.width,
-                                480, // previewView.height
-                            )
-                        ).build()
+                        .build()
                     imageAnalysis.setAnalyzer(
                         ContextCompat.getMainExecutor(context),
                         QrCodeAnalyzer { result -> code = result })
