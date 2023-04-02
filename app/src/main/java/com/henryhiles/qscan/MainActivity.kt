@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -72,12 +73,14 @@ class MainActivity : ComponentActivity() {
                             if (code != "" && !(doNotAsk && isURL(code)))
                                 ScannedAlert(
                                     onDismiss = { code = "" },
-                                    code = code
+                                    code = code, doNotAsk = doNotAsk
                                 ) { doNotAsk = it }
                         } else PermissionAlert(
-                            textToShow = if (cameraPermissionState.status.shouldShowRationale) "The camera is important for this app. Please grant the permission."
-                            else "Camera permission is required for this feature to be available. Please grant the permission.",
-                            permissionName = "camera"
+                            textToShow = if (cameraPermissionState.status.shouldShowRationale) stringResource(
+                                id = R.string.camera_rationale
+                            )
+                            else stringResource(id = R.string.camera_required),
+                            title = stringResource(id = R.string.camera_grant)
                         ) {
                             cameraPermissionState.launchPermissionRequest()
                         }

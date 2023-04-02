@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">QScan</string>
+    <string name="app_name" translatable="false">QScan</string>
+    <string name="camera_grant">Camera permission required</string>
+    <string name="camera_rationale">"The camera is important for this app. Please grant the permission."</string>
+    <string name="camera_required">"Camera permission is required for this feature to be available. Please grant the permission."</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_permission_grant">Grant permission</string>
+    <string name="action_open_url">Open URL</string>
+    <string name="setting_do_not_ask">Don\'t ask again</string>
+    <string name="code_scanned">QR Code Scanned</string>
+    <string name="code_description_url">This QR code will take you to %1$s, are you sure you want to go there?"</string>
+    <string name="code_description_text">The content of that QR Code is "%1$s".</string>
 </resources>

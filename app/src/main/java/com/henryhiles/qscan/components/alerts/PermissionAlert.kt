@@ -5,20 +5,20 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.henryhiles.qscan.R
 
 @Composable
-fun PermissionAlert(textToShow: String, permissionName: String, onGrantRequest: () -> Unit) {
+fun PermissionAlert(textToShow: String, title: String, onGrantRequest: () -> Unit) {
     AlertDialog(
         title = {
-            Text(
-                text = "${permissionName.replaceFirstChar { it.uppercaseChar() }} permission required",
-            )
+            Text(text = title)
         },
         onDismissRequest = {},
         confirmButton = {
             TextButton(onClick = onGrantRequest) {
                 Text(
-                    text = "Grant Permission",
+                    text = stringResource(id = R.string.action_permission_grant),
                 )
             }
         },
@@ -31,20 +31,3 @@ fun PermissionAlert(textToShow: String, permissionName: String, onGrantRequest: 
         }
     )
 }
-
-
-//Surface(
-//shape = MaterialTheme.shapes.large
-//) {
-//    Column(modifier = Modifier.padding(16.dp)) {
-
-
-//
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.End
-//        ) {
-
-//        }
-//    }
-//}

@@ -10,24 +10,31 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.henryhiles.qscan.LabelledCheckBox
+import com.henryhiles.qscan.R
 import com.henryhiles.qscan.utils.Helpers.isURL
 
 @Composable
-fun ScannedAlert(onDismiss: () -> Unit, code: String, onChangeDoNotAsk: (Boolean) -> Unit) {
+fun ScannedAlert(
+    onDismiss: () -> Unit,
+    code: String,
+    doNotAsk: Boolean,
+    onChangeDoNotAsk: (Boolean) -> Unit
+) {
     val uriHandler = LocalUriHandler.current
-    var tempDoNotAsk by remember { mutableStateOf(false) }
+    var tempDoNotAsk by remember { mutableStateOf(doNotAsk) }
 
     AlertDialog(
         title = {
             Text(
-                text = "QR Code Scanned",
+                text = stringResource(id = R.string.code_scanned),
             )
         }, onDismissRequest = onDismiss, dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = "Cancel",
+                    text = stringResource(id = R.string.action_cancel),
                 )
             }
         },
@@ -35,14 +42,16 @@ fun ScannedAlert(onDismiss: () -> Unit, code: String, onChangeDoNotAsk: (Boolean
             Column {
                 SelectionContainer {
                     Text(
-                        text = if (isURL(code)) "This QR code will take you to $code, are you sure you want to go there?" else "The content of that QR Code is \"$code\"",
+                        text = stringResource(id = if (isURL(code)) R.string.code_description_url else R.string.code_description_text).format(
+                            code
+                        ),
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 LabelledCheckBox(
                     checked = tempDoNotAsk,
                     onCheckedChange = { tempDoNotAsk = it },
-                    label = "Don't ask again"
+                    label = stringResource(id = R.string.setting_do_not_ask)
                 )
             }
         },
@@ -54,7 +63,7 @@ fun ScannedAlert(onDismiss: () -> Unit, code: String, onChangeDoNotAsk: (Boolean
                     onDismiss()
                 }) {
                     Text(
-                        text = "Open URL",
+                        text = stringResource(id = R.string.action_open_url),
                     )
                 }
         })
