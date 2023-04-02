@@ -48,7 +48,7 @@ fun ScannedAlert(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                LabelledCheckBox(
+                if (isURL(code)) LabelledCheckBox(
                     checked = tempDoNotAsk,
                     onCheckedChange = { tempDoNotAsk = it },
                     label = stringResource(id = R.string.setting_do_not_ask)
