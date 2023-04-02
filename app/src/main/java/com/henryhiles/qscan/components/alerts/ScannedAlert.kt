@@ -1,7 +1,6 @@
 package com.henryhiles.qscan.components.alerts
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -9,7 +8,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
@@ -41,13 +39,11 @@ fun ScannedAlert(onDismiss: () -> Unit, code: String, onChangeDoNotAsk: (Boolean
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    LabelledCheckBox(
-                        checked = tempDoNotAsk,
-                        onCheckedChange = { tempDoNotAsk = it },
-                        label = "Don't ask again"
-                    )
-                }
+                LabelledCheckBox(
+                    checked = tempDoNotAsk,
+                    onCheckedChange = { tempDoNotAsk = it },
+                    label = "Don't ask again"
+                )
             }
         },
         confirmButton = {
